@@ -14,7 +14,7 @@ export function AuthLayout() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 via-white to-indigo-50 dark:from-[#0d1020] dark:via-[#111526] dark:to-[#0d1020] p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
@@ -25,7 +25,7 @@ export function AuthLayout() {
             Organize your thoughts, studies, and research
           </p>
         </div>
-        <div className="bg-white rounded-2xl shadow-xl border p-8">
+        <div className="bg-card rounded-2xl shadow-xl border p-8">
           <Outlet />
         </div>
       </div>

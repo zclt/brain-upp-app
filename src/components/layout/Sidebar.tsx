@@ -26,7 +26,7 @@ export function Sidebar() {
       {/* Sidebar panel */}
       <aside
         className={cn(
-          'fixed top-0 left-0 z-30 h-full w-60 bg-white border-r flex flex-col transition-transform duration-200 ease-in-out',
+          'fixed top-0 left-0 z-30 h-full w-60 bg-background border-r flex flex-col transition-transform duration-200 ease-in-out',
           'lg:translate-x-0 lg:static lg:z-auto',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         )}

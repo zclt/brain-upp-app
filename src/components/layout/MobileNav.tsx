@@ -10,7 +10,7 @@ const navItems = [
 
 export function MobileNav() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-20 bg-white border-t flex lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-20 bg-background border-t flex lg:hidden">
       {navItems.map(({ to, label, icon: Icon, end }) => (
         <NavLink
           key={to}
