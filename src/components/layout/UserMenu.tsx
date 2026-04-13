@@ -29,7 +29,7 @@ export function UserMenu() {
             </div>
           )}
           {user?.displayName && (
-            <span className="text-sm font-medium leading-none hidden sm:block">
+            <span className="text-sm font-medium leading-none">
               {user.displayName}
             </span>
           )}
