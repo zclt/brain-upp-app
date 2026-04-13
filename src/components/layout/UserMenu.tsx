@@ -28,6 +28,11 @@ export function UserMenu() {
               <User className="w-4 h-4 text-primary" />
             </div>
           )}
+          {user?.displayName && (
+            <span className="text-sm font-medium leading-none hidden sm:block">
+              {user.displayName}
+            </span>
+          )}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
