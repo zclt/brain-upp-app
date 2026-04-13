@@ -20,7 +20,6 @@ export function TopBar() {
         <Plus className="w-4 h-4" />
         New Note
       </Button>
-      <UserMenu />
     </header>
   )
 }
