@@ -1,6 +1,5 @@
 import {
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   signOut as firebaseSignOut,
 } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
@@ -26,25 +25,10 @@ async function upsertUserDoc(user: {
   }
 }
 
-// Initiates Google login — redirects the entire page to Firebase auth handler
-export function signInWithGoogle() {
-  return signInWithRedirect(auth, provider)
-}
-
-// Called once on app boot to capture the auth result after redirect returns
-export async function handleRedirectResult() {
-  try {
-    const result = await getRedirectResult(auth)
-    if (result?.user) {
-      await upsertUserDoc(result.user)
-    }
-    return result?.user ?? null
-  } catch (err) {
-    // Firestore rules not yet deployed — user is still authenticated via
-    // onAuthStateChanged; only the profile doc write fails
-    console.error('handleRedirectResult error:', err)
-    return null
-  }
+export async function signInWithGoogle() {
+  const result = await signInWithPopup(auth, provider)
+  await upsertUserDoc(result.user)
+  return result.user
 }
 
 export function signOut() {

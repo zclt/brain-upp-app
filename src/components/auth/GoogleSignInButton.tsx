@@ -46,7 +46,7 @@ export function GoogleSignInButton() {
           />
         </svg>
       )}
-      {loading ? 'Redirecting to Google…' : 'Continue with Google'}
+      {loading ? 'Opening Google…' : 'Continue with Google'}
     </Button>
   )
 }
