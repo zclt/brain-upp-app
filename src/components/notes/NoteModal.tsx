@@ -20,13 +20,13 @@ import { PRIORITY_LEVELS, NOTE_CATEGORIES } from '@/lib/constants'
 import type { NoteStatus } from '@/types/note'
 
 const schema = z.object({
-  title:    z.string().min(1, 'Title is required').max(200),
-  content:  z.string().max(5000).optional().default(''),
+  title: z.string().min(1, 'Title is required').max(80),
+  content: z.string().max(200).optional().default(''),
   priority: z.enum(['urgent', 'high', 'medium', 'low', 'none']),
   category: z.enum(['study', 'research', 'idea', 'reference', 'task', 'other']),
-  status:   z.enum(['backlog', 'todo', 'in_progress', 'done']),
-  tags:     z.string().optional().default(''),
-  dueDate:  z.string().optional().default(''),
+  status: z.enum(['backlog', 'todo', 'in_progress', 'done']),
+  tags: z.string().optional().default(''),
+  dueDate: z.string().optional().default(''),
 })
 
 type FormValues = z.infer<typeof schema>
@@ -53,13 +53,13 @@ export function NoteModal() {
   useEffect(() => {
     if (editingNote) {
       reset({
-        title:    editingNote.title,
-        content:  editingNote.content,
+        title: editingNote.title,
+        content: editingNote.content,
         priority: editingNote.priority,
         category: editingNote.category,
-        status:   editingNote.status,
-        tags:     editingNote.tags.join(', '),
-        dueDate:  editingNote.dueDate?.split('T')[0] ?? '',
+        status: editingNote.status,
+        tags: editingNote.tags.join(', '),
+        dueDate: editingNote.dueDate?.split('T')[0] ?? '',
       })
     } else {
       reset({ title: '', content: '', priority: 'none', category: 'task', status: 'todo', tags: '', dueDate: '' })
@@ -78,22 +78,22 @@ export function NoteModal() {
 
     if (editingNote) {
       await updateNote(user.uid, editingNote.id, {
-        title:       values.title,
-        content:     values.content ?? '',
-        priority:    values.priority,
-        category:    values.category,
-        status:      values.status as NoteStatus,
+        title: values.title,
+        content: values.content ?? '',
+        priority: values.priority,
+        category: values.category,
+        status: values.status as NoteStatus,
         tags,
         dueDate,
         completedAt: values.status === 'done' ? (editingNote.completedAt ?? new Date().toISOString()) : null,
       })
     } else {
       await createNote(user.uid, {
-        title:       values.title,
-        content:     values.content ?? '',
-        priority:    values.priority,
-        category:    values.category,
-        status:      values.status as NoteStatus,
+        title: values.title,
+        content: values.content ?? '',
+        priority: values.priority,
+        category: values.category,
+        status: values.status as NoteStatus,
         tags,
         dueDate,
         completedAt: null,
@@ -112,13 +112,23 @@ export function NoteModal() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor="title">Title *</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="title">Title *</Label>
+              <span className={`text-xs tabular-nums ${watch('title').length > 80 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                {watch('title').length}/80
+              </span>
+            </div>
             <Input id="title" placeholder="What's on your mind?" {...register('title')} />
             {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="content">Content</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="content">Content</Label>
+              <span className={`text-xs tabular-nums ${(watch('content')?.length ?? 0) > 200 ? 'text-destructive' : 'text-muted-foreground'}`}>
+                {watch('content')?.length ?? 0}/200
+              </span>
+            </div>
             <Textarea
               id="content"
               placeholder="Details, links, ideas…"
