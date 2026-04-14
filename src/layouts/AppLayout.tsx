@@ -3,6 +3,7 @@ import { Sidebar } from '@/components/layout/Sidebar'
 import { TopBar } from '@/components/layout/TopBar'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { NoteModal } from '@/components/notes/NoteModal'
+import { ThemeToggle } from '@/components/layout/ThemeToggle'
 import { useNotes } from '@/hooks/useNotes'
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -27,8 +28,9 @@ export function AppLayout() {
 
       <div className="flex-1 flex flex-col min-w-0">
         {/* Desktop top bar */}
-        <div className="hidden lg:flex h-16 border-b bg-white items-center px-6 shrink-0 gap-4">
+        <div className="hidden lg:flex h-16 border-b bg-background items-center px-6 shrink-0 gap-4">
           <div className="flex-1" />
+          <ThemeToggle />
           <DesktopNewButton />
         </div>
 

@@ -39,7 +39,7 @@ export function TodoList() {
             </Button>
           </div>
         ) : (
-          <div className="bg-white rounded-xl border shadow-sm divide-y-0">
+          <div className="bg-card rounded-xl border shadow-sm divide-y-0">
             <div className="px-4">
               {filtered.map((note) => (
                 <TodoItem key={note.id} note={note} />

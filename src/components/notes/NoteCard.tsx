@@ -42,7 +42,7 @@ export function NoteCard({ note, className }: NoteCardProps) {
   return (
     <div
       className={cn(
-        'group relative bg-white rounded-xl border p-4 shadow-sm hover:shadow-md transition-shadow',
+        'group relative bg-card rounded-xl border p-4 shadow-sm hover:shadow-md transition-shadow',
         isDone && 'opacity-60',
         className,
       )}

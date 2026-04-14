@@ -8,6 +8,12 @@
     <meta name="description" content="Brain-Upp — organize your notes, studies, and research" />
     <link rel="manifest" href="/manifest.json" />
     <title>Brain-Upp</title>
+    <script>
+      try {
+        const t = JSON.parse(localStorage.getItem('brain-upp-theme') || '{}')
+        if (t.state?.theme === 'dark') document.documentElement.classList.add('dark')
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="root"></div>
