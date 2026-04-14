@@ -25,7 +25,7 @@ const schema = z.object({
   priority: z.enum(['urgent', 'high', 'medium', 'low', 'none']),
   category: z.enum(['study', 'research', 'idea', 'reference', 'task', 'other']),
   status: z.enum(['backlog', 'todo', 'in_progress', 'done']),
-  tags: z.string().optional().default(''),
+  tags: z.string().max(50).optional().default(''),
   dueDate: z.string().optional().default(''),
 })
 
