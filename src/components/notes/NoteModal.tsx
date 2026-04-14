@@ -118,7 +118,7 @@ export function NoteModal() {
                 {watch('title').length}/80
               </span>
             </div>
-            <Input id="title" placeholder="What's on your mind?" {...register('title')} />
+            <Input id="title" placeholder="What's on your mind?" maxLength={80} {...register('title')} />
             {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
           </div>
 
@@ -133,6 +133,7 @@ export function NoteModal() {
               id="content"
               placeholder="Details, links, ideas…"
               className="min-h-[100px]"
+              maxLength={200}
               {...register('content')}
             />
           </div>
