@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -32,6 +33,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>
 
 export function NoteModal() {
+  const { t } = useTranslation()
   const { modalOpen, editingNote, closeModal } = useUIStore()
   const user = useAuthStore((s) => s.user)
   const notes = useNotesStore((s) => s.notes)
@@ -107,31 +109,31 @@ export function NoteModal() {
     <Dialog open={modalOpen} onOpenChange={(open) => !open && closeModal()}>
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{editingNote ? 'Edit Note' : 'New Note'}</DialogTitle>
+          <DialogTitle>{editingNote ? t('modal.editNote') : t('modal.newNote')}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <Label htmlFor="title">Title *</Label>
+              <Label htmlFor="title">{t('modal.titleLabel')}</Label>
               <span className={`text-xs tabular-nums ${watch('title').length > 80 ? 'text-destructive' : 'text-muted-foreground'}`}>
                 {watch('title').length}/80
               </span>
             </div>
-            <Input id="title" placeholder="What's on your mind?" maxLength={80} {...register('title')} />
+            <Input id="title" placeholder={t('modal.titlePlaceholder')} maxLength={80} {...register('title')} />
             {errors.title && <p className="text-xs text-destructive">{errors.title.message}</p>}
           </div>
 
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <Label htmlFor="content">Content</Label>
+              <Label htmlFor="content">{t('modal.contentLabel')}</Label>
               <span className={`text-xs tabular-nums ${(watch('content')?.length ?? 0) > 200 ? 'text-destructive' : 'text-muted-foreground'}`}>
                 {watch('content')?.length ?? 0}/200
               </span>
             </div>
             <Textarea
               id="content"
-              placeholder="Details, links, ideas…"
+              placeholder={t('modal.contentPlaceholder')}
               className="min-h-[100px]"
               maxLength={200}
               {...register('content')}
@@ -140,66 +142,65 @@ export function NoteModal() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label>Priority</Label>
+              <Label>{t('modal.priorityLabel')}</Label>
               <Select
                 value={watch('priority')}
                 onValueChange={(v) => setValue('priority', v as FormValues['priority'])}
               >
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {PRIORITY_LEVELS.map((p) => (
-                    <SelectItem key={p.value} value={p.value}>{p.label}</SelectItem>
+                  {(['urgent', 'high', 'medium', 'low', 'none'] as const).map((v) => (
+                    <SelectItem key={v} value={v}>{t(`priority.${v}`)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-1.5">
-              <Label>Status</Label>
+              <Label>{t('modal.statusLabel')}</Label>
               <Select
                 value={watch('status')}
                 onValueChange={(v) => setValue('status', v as FormValues['status'])}
               >
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="backlog">Backlog</SelectItem>
-                  <SelectItem value="todo">To Do</SelectItem>
-                  <SelectItem value="in_progress">In Progress</SelectItem>
-                  <SelectItem value="done">Done</SelectItem>
+                  {(['backlog', 'todo', 'in_progress', 'done'] as const).map((v) => (
+                    <SelectItem key={v} value={v}>{t(`columns.${v}`)}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <Label>Category</Label>
+            <Label>{t('modal.categoryLabel')}</Label>
             <Select
               value={watch('category')}
               onValueChange={(v) => setValue('category', v as FormValues['category'])}
             >
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                {NOTE_CATEGORIES.map((c) => (
-                  <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
+                {(['study', 'research', 'idea', 'reference', 'task', 'other'] as const).map((v) => (
+                  <SelectItem key={v} value={v}>{t(`category.${v}`)}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="tags">Tags (comma separated)</Label>
-            <Input id="tags" placeholder="react, study, important" {...register('tags')} />
+            <Label htmlFor="tags">{t('modal.tagsLabel')}</Label>
+            <Input id="tags" placeholder={t('modal.tagsPlaceholder')} {...register('tags')} />
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="dueDate">Due Date</Label>
+            <Label htmlFor="dueDate">{t('modal.dueDateLabel')}</Label>
             <Input id="dueDate" type="date" {...register('dueDate')} />
           </div>
 
           <DialogFooter className="pt-2">
-            <Button type="button" variant="outline" onClick={closeModal}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={closeModal}>{t('common.cancel')}</Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Saving…' : editingNote ? 'Save Changes' : 'Create Note'}
+              {isSubmitting ? t('common.saving') : editingNote ? t('common.saveChanges') : t('common.createNote')}
             </Button>
           </DialogFooter>
         </form>

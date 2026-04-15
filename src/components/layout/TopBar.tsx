@@ -2,6 +2,7 @@ import { Menu, Plus } from 'lucide-react'
 import { useUIStore } from '@/stores/uiStore'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from './ThemeToggle'
+import { LanguageSelector } from './LanguageSelector'
 
 export function TopBar() {
   const { setSidebarOpen, openModal } = useUIStore()
@@ -16,6 +17,7 @@ export function TopBar() {
         <Menu className="w-5 h-5" />
       </button>
       <div className="flex-1" />
+      <LanguageSelector />
       <ThemeToggle />
       <Button size="sm" onClick={() => openModal()} className="gap-1.5">
         <Plus className="w-4 h-4" />

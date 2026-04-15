@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useDroppable } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { cn } from '@/lib/utils'
@@ -12,6 +13,7 @@ interface KanbanColumnProps {
 }
 
 export function KanbanColumn({ id, label, notes }: KanbanColumnProps) {
+  const { t } = useTranslation()
   const { setNodeRef, isOver } = useDroppable({ id })
 
   return (
@@ -30,7 +32,7 @@ export function KanbanColumn({ id, label, notes }: KanbanColumnProps) {
           ))}
         </SortableContext>
         {notes.length === 0 && (
-          <p className="text-xs text-muted-foreground text-center py-6">Drop cards here</p>
+          <p className="text-xs text-muted-foreground text-center py-6">{t('kanban.dropHere')}</p>
         )}
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 import { MoreHorizontal, Pencil, Trash2, CheckCircle2, Circle } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -20,9 +21,9 @@ interface NoteCardProps {
 }
 
 export function NoteCard({ note, className }: NoteCardProps) {
+  const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
   const openModal = useUIStore((s) => s.openModal)
-
   const isDone = note.status === 'done'
 
   async function toggleDone() {
@@ -48,11 +49,10 @@ export function NoteCard({ note, className }: NoteCardProps) {
       )}
     >
       <div className="flex items-start gap-3">
-        {/* Done toggle */}
         <button
           onClick={toggleDone}
           className="mt-0.5 shrink-0 text-muted-foreground hover:text-primary transition-colors"
-          aria-label={isDone ? 'Mark as todo' : 'Mark as done'}
+          aria-label={isDone ? t('columns.todo') : t('stats.done')}
         >
           {isDone ? (
             <CheckCircle2 className="w-5 h-5 text-green-500" />
@@ -61,7 +61,6 @@ export function NoteCard({ note, className }: NoteCardProps) {
           )}
         </button>
 
-        {/* Content */}
         <div className="flex-1 min-w-0">
           <p className={cn('font-medium text-sm leading-snug', isDone && 'line-through text-muted-foreground')}>
             {note.title}
@@ -77,29 +76,31 @@ export function NoteCard({ note, className }: NoteCardProps) {
           </div>
           {note.dueDate && (
             <p className="text-xs text-muted-foreground mt-1.5">
-              Due {format(new Date(note.dueDate), 'MMM d')}
+              {t('todo.due', { date: format(new Date(note.dueDate), 'MMM d') })}
             </p>
           )}
         </div>
 
-        {/* Actions */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="opacity-0 group-hover:opacity-100 p-1 rounded-md hover:bg-accent transition-opacity" aria-label="More options">
+            <button
+              className="opacity-0 group-hover:opacity-100 p-1 rounded-md hover:bg-accent transition-opacity"
+              aria-label={t('common.moreOptions')}
+            >
               <MoreHorizontal className="w-4 h-4" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => openModal(note)} className="cursor-pointer">
               <Pencil className="mr-2 h-4 w-4" />
-              Edit
+              {t('common.edit')}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={handleDelete}
               className="text-destructive focus:text-destructive cursor-pointer"
             >
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete
+              {t('common.delete')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

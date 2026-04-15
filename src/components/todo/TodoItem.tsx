@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -15,6 +16,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 export function TodoItem({ note }: { note: Note }) {
+  const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
   const openModal = useUIStore((s) => s.openModal)
   const isDone = note.status === 'done'
@@ -38,7 +40,7 @@ export function TodoItem({ note }: { note: Note }) {
         type="checkbox"
         checked={isDone}
         onChange={toggleDone}
-        className="mt-0.5 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer shrink-0"
+        className="mt-0.5 h-4 w-4 rounded border-border text-primary focus:ring-primary cursor-pointer shrink-0"
       />
       <div className="flex-1 min-w-0">
         <p className={cn('text-sm font-medium', isDone && 'line-through text-muted-foreground')}>
@@ -54,28 +56,31 @@ export function TodoItem({ note }: { note: Note }) {
           ))}
           {note.dueDate && (
             <span className="text-xs text-muted-foreground">
-              Due {format(new Date(note.dueDate), 'MMM d')}
+              {t('todo.due', { date: format(new Date(note.dueDate), 'MMM d') })}
             </span>
           )}
         </div>
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="opacity-0 group-hover:opacity-100 p-1 rounded-md hover:bg-accent transition-opacity" aria-label="More options">
+          <button
+            className="opacity-0 group-hover:opacity-100 p-1 rounded-md hover:bg-accent transition-opacity"
+            aria-label={t('common.moreOptions')}
+          >
             <MoreHorizontal className="w-4 h-4" />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => openModal(note)} className="cursor-pointer">
             <Pencil className="mr-2 h-4 w-4" />
-            Edit
+            {t('common.edit')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={handleDelete}
             className="text-destructive focus:text-destructive cursor-pointer"
           >
             <Trash2 className="mr-2 h-4 w-4" />
-            Delete
+            {t('common.delete')}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

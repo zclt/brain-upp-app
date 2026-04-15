@@ -4,6 +4,7 @@ import { TopBar } from '@/components/layout/TopBar'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { NoteModal } from '@/components/notes/NoteModal'
 import { ThemeToggle } from '@/components/layout/ThemeToggle'
+import { LanguageSelector } from '@/components/layout/LanguageSelector'
 import { useNotes } from '@/hooks/useNotes'
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -30,6 +31,7 @@ export function AppLayout() {
         {/* Desktop top bar */}
         <div className="hidden lg:flex h-16 border-b bg-background items-center px-6 shrink-0 gap-4">
           <div className="flex-1" />
+          <LanguageSelector />
           <ThemeToggle />
           <DesktopNewButton />
         </div>

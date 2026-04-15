@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/stores/authStore'
 import { signOut } from '@/services/auth.service'
 import {
@@ -11,6 +12,7 @@ import {
 import { LogOut, User } from 'lucide-react'
 
 export function UserMenu() {
+  const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
 
   return (
@@ -29,9 +31,7 @@ export function UserMenu() {
             </div>
           )}
           {user?.displayName && (
-            <span className="text-sm font-medium leading-none">
-              {user.displayName}
-            </span>
+            <span className="text-sm font-medium leading-none">{user.displayName}</span>
           )}
         </button>
       </DropdownMenuTrigger>
@@ -43,9 +43,12 @@ export function UserMenu() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()} className="text-destructive focus:text-destructive cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => signOut()}
+          className="text-destructive focus:text-destructive cursor-pointer"
+        >
           <LogOut className="mr-2 h-4 w-4" />
-          Sign out
+          {t('auth.signOut')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
