@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 import type { NoteStatus } from '@/types/note'
 
@@ -15,9 +16,13 @@ interface ColumnHeaderProps {
 }
 
 export function ColumnHeader({ id, label, count }: ColumnHeaderProps) {
+  const { t } = useTranslation()
+
   return (
     <div className="flex items-center justify-between mb-3">
-      <h3 className="font-semibold text-sm text-foreground">{label}</h3>
+      <h3 className="font-semibold text-sm text-foreground">
+        {t(`columns.${id}`, { defaultValue: label })}
+      </h3>
       <span className={cn('inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold', colorMap[id])}>
         {count}
       </span>

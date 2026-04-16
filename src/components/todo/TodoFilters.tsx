@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 import type { Priority, NoteStatus } from '@/types/note'
 
@@ -10,23 +11,6 @@ interface TodoFiltersProps {
   filter: TodoFilter
   onChange: (f: TodoFilter) => void
 }
-
-const statusOptions: { value: TodoFilter['status']; label: string }[] = [
-  { value: 'all',         label: 'All'         },
-  { value: 'backlog',     label: 'Backlog'      },
-  { value: 'todo',        label: 'To Do'        },
-  { value: 'in_progress', label: 'In Progress'  },
-  { value: 'done',        label: 'Done'         },
-]
-
-const priorityOptions: { value: TodoFilter['priority']; label: string }[] = [
-  { value: 'all',    label: 'All Priorities' },
-  { value: 'urgent', label: 'Urgent'         },
-  { value: 'high',   label: 'High'           },
-  { value: 'medium', label: 'Medium'         },
-  { value: 'low',    label: 'Low'            },
-  { value: 'none',   label: 'None'           },
-]
 
 function Chip({
   active,
@@ -53,6 +37,25 @@ function Chip({
 }
 
 export function TodoFilters({ filter, onChange }: TodoFiltersProps) {
+  const { t } = useTranslation()
+
+  const statusOptions: { value: TodoFilter['status']; label: string }[] = [
+    { value: 'all',         label: t('filters.all')           },
+    { value: 'backlog',     label: t('columns.backlog')       },
+    { value: 'todo',        label: t('columns.todo')          },
+    { value: 'in_progress', label: t('columns.in_progress')   },
+    { value: 'done',        label: t('columns.done')          },
+  ]
+
+  const priorityOptions: { value: TodoFilter['priority']; label: string }[] = [
+    { value: 'all',    label: t('filters.allPriorities') },
+    { value: 'urgent', label: t('priority.urgent')       },
+    { value: 'high',   label: t('priority.high')         },
+    { value: 'medium', label: t('priority.medium')       },
+    { value: 'low',    label: t('priority.low')          },
+    { value: 'none',   label: t('priority.none')         },
+  ]
+
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap gap-2">

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useNotesStore } from '@/stores/notesStore'
 import { usePriority } from '@/hooks/usePriority'
 import { StatsBar } from '@/components/dashboard/StatsBar'
@@ -7,6 +8,7 @@ import { CompletedSection } from '@/components/dashboard/CompletedSection'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export function DashboardPage() {
+  const { t } = useTranslation()
   const isLoading = useNotesStore((s) => s.isLoading)
   const { priorityNotes, todoNotes, doneNotes, stats } = usePriority()
 
@@ -30,10 +32,9 @@ export function DashboardPage() {
   return (
     <div className="p-4 sm:p-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground text-sm">Overview of your notes and tasks</p>
+        <h1 className="text-2xl font-bold tracking-tight">{t('dashboard.title')}</h1>
+        <p className="text-muted-foreground text-sm">{t('dashboard.subtitle')}</p>
       </div>
-
       <StatsBar {...stats} />
       <PrioritySection notes={priorityNotes} />
       <TodoSection notes={todoNotes} />

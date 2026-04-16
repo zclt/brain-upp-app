@@ -1,14 +1,17 @@
+import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import { LayoutDashboard, Kanban, ListTodo } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const navItems = [
-  { to: '/',       label: 'Dashboard', icon: LayoutDashboard, end: true  },
-  { to: '/kanban', label: 'Kanban',    icon: Kanban,          end: false },
-  { to: '/todo',   label: 'Todo',      icon: ListTodo,        end: false },
-]
-
 export function MobileNav() {
+  const { t } = useTranslation()
+
+  const navItems = [
+    { to: '/',       label: t('nav.dashboard'), icon: LayoutDashboard, end: true  },
+    { to: '/kanban', label: t('nav.kanban'),    icon: Kanban,          end: false },
+    { to: '/todo',   label: t('nav.todo'),      icon: ListTodo,        end: false },
+  ]
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-20 bg-background border-t flex lg:hidden">
       {navItems.map(({ to, label, icon: Icon, end }) => (

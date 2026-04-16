@@ -1,29 +1,28 @@
+import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import { Brain, LayoutDashboard, Kanban, ListTodo, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useUIStore } from '@/stores/uiStore'
 import { UserMenu } from './UserMenu'
 
-const navItems = [
-  { to: '/',        label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/kanban',  label: 'Kanban',    icon: Kanban,          end: false },
-  { to: '/todo',    label: 'Todo List', icon: ListTodo,        end: false },
-]
-
 export function Sidebar() {
+  const { t } = useTranslation()
   const { sidebarOpen, setSidebarOpen } = useUIStore()
+
+  const navItems = [
+    { to: '/',       label: t('nav.dashboard'), icon: LayoutDashboard, end: true  },
+    { to: '/kanban', label: t('nav.kanban'),    icon: Kanban,          end: false },
+    { to: '/todo',   label: t('nav.todo'),      icon: ListTodo,        end: false },
+  ]
 
   return (
     <>
-      {/* Mobile overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-20 bg-black/40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
-
-      {/* Sidebar panel */}
       <aside
         className={cn(
           'fixed top-0 left-0 z-30 h-full w-60 bg-background border-r flex flex-col transition-transform duration-200 ease-in-out',
@@ -31,7 +30,6 @@ export function Sidebar() {
           sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        {/* Logo */}
         <div className="flex items-center justify-between h-16 px-4 border-b shrink-0">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -42,13 +40,12 @@ export function Sidebar() {
           <button
             className="lg:hidden p-1 rounded-md hover:bg-accent"
             onClick={() => setSidebarOpen(false)}
-            aria-label="Close sidebar"
+            aria-label={t('common.closeSidebar')}
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
           {navItems.map(({ to, label, icon: Icon, end }) => (
             <NavLink
@@ -71,7 +68,6 @@ export function Sidebar() {
           ))}
         </nav>
 
-        {/* Footer */}
         <div className="p-4 border-t shrink-0">
           <UserMenu />
         </div>

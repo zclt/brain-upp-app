@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNotesStore } from '@/stores/notesStore'
 import { useUIStore } from '@/stores/uiStore'
 import { TodoItem } from './TodoItem'
@@ -7,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Plus, ListTodo } from 'lucide-react'
 
 export function TodoList() {
+  const { t } = useTranslation()
   const notes = useNotesStore((s) => s.notes)
   const openModal = useUIStore((s) => s.openModal)
   const [filter, setFilter] = useState<TodoFilter>({ status: 'all', priority: 'all' })
@@ -32,10 +34,10 @@ export function TodoList() {
         {filtered.length === 0 ? (
           <div className="text-center py-16">
             <ListTodo className="w-12 h-12 text-muted-foreground/40 mx-auto mb-3" />
-            <p className="text-sm text-muted-foreground mb-4">No notes match your filters</p>
+            <p className="text-sm text-muted-foreground mb-4">{t('todo.noNotes')}</p>
             <Button onClick={() => openModal()} variant="outline" size="sm" className="gap-2">
               <Plus className="w-4 h-4" />
-              Create a note
+              {t('todo.createFirst')}
             </Button>
           </div>
         ) : (
