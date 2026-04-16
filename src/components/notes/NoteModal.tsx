@@ -17,7 +17,6 @@ import { Label } from '@/components/ui/label'
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select'
-import { PRIORITY_LEVELS, NOTE_CATEGORIES } from '@/lib/constants'
 import type { NoteStatus } from '@/types/note'
 
 const schema = z.object({
