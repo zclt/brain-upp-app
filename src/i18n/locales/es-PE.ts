@@ -100,6 +100,11 @@ const esPE = {
     'pt-BR': 'Português',
     'es-PE': 'Español',
   },
+  notifications: {
+    dueTodayTitle: 'Tarea vence hoy',
+    dueTodayBody: '📌 {{title}}',
+    overdueTodayBody: '⚠️ {{title}}',
+  },
 } as const
 
 export default esPE
