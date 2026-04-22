@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Menu, Plus, ChevronDown, FileText, Zap } from 'lucide-react'
+import { Menu, Plus, ChevronDown, Zap } from 'lucide-react'
 import { useUIStore } from '@/stores/uiStore'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from './ThemeToggle'
@@ -11,7 +11,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 
 export function TopBar() {
@@ -33,32 +32,36 @@ export function TopBar() {
         <LanguageSelector />
         <ThemeToggle />
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="sm" className="gap-1.5">
-              <Plus className="w-4 h-4" />
-              {t('common.newNote')}
-              <ChevronDown className="w-3 h-3 opacity-70" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-44">
-            <DropdownMenuItem
-              onClick={() => openModal()}
-              className="cursor-pointer gap-2"
-            >
-              <FileText className="w-4 h-4" />
-              {t('quickNote.newNote')}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => setQuickNoteOpen(true)}
-              className="cursor-pointer gap-2"
-            >
-              <Zap className="w-4 h-4" />
-              {t('quickNote.label')}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* Split button */}
+        <div className="flex items-stretch">
+          {/* Main action: opens full modal */}
+          <Button
+            size="sm"
+            onClick={() => openModal()}
+            className="gap-1.5 rounded-r-none border-r border-primary-foreground/20"
+          >
+            <Plus className="w-4 h-4" />
+            {t('common.newNote')}
+          </Button>
+
+          {/* Chevron: opens dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="sm" className="rounded-l-none px-2">
+                <ChevronDown className="w-3.5 h-3.5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-44">
+              <DropdownMenuItem
+                onClick={() => setQuickNoteOpen(true)}
+                className="cursor-pointer gap-2"
+              >
+                <Zap className="w-4 h-4" />
+                {t('quickNote.label')}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </header>
 
       <QuickNote open={quickNoteOpen} onClose={() => setQuickNoteOpen(false)} />
