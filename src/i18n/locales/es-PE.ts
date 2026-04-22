@@ -101,6 +101,15 @@ const esPE = {
     'pt-BR': 'Português',
     'es-PE': 'Español',
   },
+  quickNote: {
+    label: 'Nota rápida',
+    newNote: 'Nueva nota',
+    placeholder: 'La primera línea es el título, el resto es la descripción…',
+    hint: 'Ctrl+Enter para guardar · Esc para cancelar',
+    save: 'Guardar',
+    cancel: 'Cancelar',
+    titleRequired: 'Escribe al menos el título',
+  },
   trash: {
     title: 'Papelera',
     subtitle: 'Los elementos eliminados se conservan durante 30 días',

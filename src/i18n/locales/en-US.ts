@@ -101,6 +101,15 @@ const enUS = {
     'pt-BR': 'Português',
     'es-PE': 'Español',
   },
+  quickNote: {
+    label: 'Quick note',
+    newNote: 'New note',
+    placeholder: 'First line is the title, rest is the description…',
+    hint: 'Ctrl+Enter to save · Esc to cancel',
+    save: 'Save',
+    cancel: 'Cancel',
+    titleRequired: 'Write at least a title',
+  },
   trash: {
     title: 'Trash',
     subtitle: 'Deleted items are kept for 30 days',
