@@ -15,6 +15,7 @@ export interface Note {
   tags: string[]
   dueDate: string | null
   completedAt: string | null
+  deletedAt: string | null
   columnOrder: number
   createdAt: string
   updatedAt: string
