@@ -100,6 +100,11 @@ const ptBR = {
     'pt-BR': 'Português',
     'es-PE': 'Español',
   },
+  notifications: {
+    dueTodayTitle: 'Tarefa vence hoje',
+    dueTodayBody: '📌 {{title}}',
+    overdueTodayBody: '⚠️ {{title}}',
+  },
 } as const
 
 export default ptBR

@@ -6,6 +6,7 @@ import { NoteModal } from '@/components/notes/NoteModal'
 import { ThemeToggle } from '@/components/layout/ThemeToggle'
 import { LanguageSelector } from '@/components/layout/LanguageSelector'
 import { useNotes } from '@/hooks/useNotes'
+import { useTaskNotifications } from '@/hooks/useTaskNotifications'
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useUIStore } from '@/stores/uiStore'
@@ -22,6 +23,7 @@ function DesktopNewButton() {
 
 export function AppLayout() {
   useNotes()
+  useTaskNotifications()
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">

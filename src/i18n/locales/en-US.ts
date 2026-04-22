@@ -100,6 +100,11 @@ const enUS = {
     'pt-BR': 'Português',
     'es-PE': 'Español',
   },
+  notifications: {
+    dueTodayTitle: 'Task due today',
+    dueTodayBody: '📌 {{title}}',
+    overdueTodayBody: '⚠️ {{title}}',
+  },
 } as const
 
 export default enUS
