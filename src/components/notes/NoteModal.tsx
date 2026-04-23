@@ -98,6 +98,7 @@ export function NoteModal() {
         tags,
         dueDate,
         completedAt: null,
+        deletedAt: null,
         columnOrder: maxOrder,
       })
     }
