@@ -1,18 +1,21 @@
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
-import { Brain, LayoutDashboard, Kanban, ListTodo, X } from 'lucide-react'
+import { Brain, LayoutDashboard, Kanban, ListTodo, Trash2, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useUIStore } from '@/stores/uiStore'
+import { useTrashStore } from '@/stores/trashStore'
 import { UserMenu } from './UserMenu'
 
 export function Sidebar() {
   const { t } = useTranslation()
   const { sidebarOpen, setSidebarOpen } = useUIStore()
+  const trashCount = useTrashStore((s) => s.trashedNotes.length)
 
   const navItems = [
-    { to: '/',       label: t('nav.dashboard'), icon: LayoutDashboard, end: true  },
-    { to: '/kanban', label: t('nav.kanban'),    icon: Kanban,          end: false },
-    { to: '/todo',   label: t('nav.todo'),      icon: ListTodo,        end: false },
+    { to: '/',       label: t('nav.dashboard'), icon: LayoutDashboard, end: true,  badge: 0 },
+    { to: '/kanban', label: t('nav.kanban'),    icon: Kanban,          end: false, badge: 0 },
+    { to: '/todo',   label: t('nav.todo'),      icon: ListTodo,        end: false, badge: 0 },
+    { to: '/trash',  label: t('nav.trash'),     icon: Trash2,          end: false, badge: trashCount },
   ]
 
   return (
@@ -47,7 +50,7 @@ export function Sidebar() {
         </div>
 
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
-          {navItems.map(({ to, label, icon: Icon, end }) => (
+          {navItems.map(({ to, label, icon: Icon, end, badge }) => (
             <NavLink
               key={to}
               to={to}
@@ -63,7 +66,12 @@ export function Sidebar() {
               }
             >
               <Icon className="w-5 h-5 shrink-0" />
-              {label}
+              <span className="flex-1">{label}</span>
+              {badge > 0 && (
+                <span className="ml-auto text-xs bg-muted text-muted-foreground rounded-full px-1.5 py-0.5 min-w-[1.25rem] text-center leading-none">
+                  {badge}
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>

@@ -6,6 +6,7 @@ import { NoteModal } from '@/components/notes/NoteModal'
 import { ThemeToggle } from '@/components/layout/ThemeToggle'
 import { LanguageSelector } from '@/components/layout/LanguageSelector'
 import { useNotes } from '@/hooks/useNotes'
+import { useTrash } from '@/hooks/useTrash'
 import { useTaskNotifications } from '@/hooks/useTaskNotifications'
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -23,6 +24,7 @@ function DesktopNewButton() {
 
 export function AppLayout() {
   useNotes()
+  useTrash()
   useTaskNotifications()
 
   return (

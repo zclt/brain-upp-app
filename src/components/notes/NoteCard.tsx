@@ -5,7 +5,8 @@ import { cn } from '@/lib/utils'
 import type { Note } from '@/types/note'
 import { useAuthStore } from '@/stores/authStore'
 import { useUIStore } from '@/stores/uiStore'
-import { updateNote, deleteNote } from '@/services/notes.service'
+import { updateNote, softDeleteNote, enforceTrashLimit } from '@/services/notes.service'
+import { useTrashStore } from '@/stores/trashStore'
 import { PriorityIndicator } from './PriorityIndicator'
 import { TagBadge } from './TagBadge'
 import {
@@ -24,6 +25,7 @@ export function NoteCard({ note, className }: NoteCardProps) {
   const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
   const openModal = useUIStore((s) => s.openModal)
+  const trashedNotes = useTrashStore((s) => s.trashedNotes)
   const isDone = note.status === 'done'
 
   async function toggleDone() {
@@ -37,7 +39,8 @@ export function NoteCard({ note, className }: NoteCardProps) {
 
   async function handleDelete() {
     if (!user) return
-    await deleteNote(user.uid, note.id)
+    await enforceTrashLimit(user.uid, trashedNotes)
+    await softDeleteNote(user.uid, note.id)
   }
 
   return (
