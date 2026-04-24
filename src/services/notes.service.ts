@@ -16,20 +16,41 @@ import type { Note, NoteCreateInput, NoteUpdateInput } from '@/types/note'
 const TRASH_MAX_ITEMS = 10
 const TRASH_EXPIRY_DAYS = 30
 
+// Removes ASCII control characters (except tab and newline) to prevent stored garbage
+function sanitize(s: string): string {
+  return s.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').trim()
+}
+
+function sanitizeInput(input: NoteCreateInput): NoteCreateInput {
+  return {
+    ...input,
+    title: sanitize(input.title),
+    content: sanitize(input.content),
+    tags: input.tags.map((t) => sanitize(t)).filter(Boolean),
+  }
+}
+
 function notesCol(userId: string) {
   return collection(db, 'users', userId, 'notes')
 }
 
 export async function createNote(userId: string, input: NoteCreateInput): Promise<Note> {
   const now = new Date().toISOString()
-  const data = { ...input, deletedAt: null, userId, createdAt: now, updatedAt: now }
+  const clean = sanitizeInput(input)
+  const data = { ...clean, deletedAt: null, userId, createdAt: now, updatedAt: now }
   const ref = await addDoc(notesCol(userId), data)
   return { ...data, id: ref.id } as Note
 }
 
 export async function updateNote(userId: string, noteId: string, input: NoteUpdateInput) {
   const ref = doc(db, 'users', userId, 'notes', noteId)
-  await updateDoc(ref, { ...input, updatedAt: new Date().toISOString() })
+  const clean: NoteUpdateInput = {
+    ...input,
+    ...(input.title !== undefined && { title: sanitize(input.title) }),
+    ...(input.content !== undefined && { content: sanitize(input.content) }),
+    ...(input.tags !== undefined && { tags: input.tags.map((t) => sanitize(t)).filter(Boolean) }),
+  }
+  await updateDoc(ref, { ...clean, updatedAt: new Date().toISOString() })
 }
 
 export async function softDeleteNote(userId: string, noteId: string) {

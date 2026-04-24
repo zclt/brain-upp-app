@@ -22,13 +22,13 @@ import {
 import type { NoteStatus } from '@/types/note'
 
 const schema = z.object({
-  title: z.string().min(1, 'Title is required').max(80),
-  content: z.string().max(200).optional().default(''),
+  title: z.string().trim().min(1, 'Title is required').max(80),
+  content: z.string().trim().max(500).optional().default(''),
   priority: z.enum(['urgent', 'high', 'medium', 'low', 'none']),
   category: z.enum(['study', 'research', 'idea', 'reference', 'task', 'other']),
   status: z.enum(['backlog', 'todo', 'in_progress', 'done']),
-  tags: z.string().max(50).optional().default(''),
-  dueDate: z.string().optional().default(''),
+  tags: z.string().max(200).optional().default(''),
+  dueDate: z.union([z.literal(''), z.string().regex(/^\d{4}-\d{2}-\d{2}$/)]).default(''),
 })
 
 type FormValues = z.infer<typeof schema>
@@ -74,7 +74,7 @@ export function NoteModal() {
     if (!user) return
 
     const tags = values.tags
-      ? values.tags.split(',').map((t) => t.trim()).filter(Boolean)
+      ? values.tags.split(',').map((t) => t.trim().slice(0, 20)).filter(Boolean).slice(0, 10)
       : []
 
     const dueDate = values.dueDate ? new Date(values.dueDate).toISOString() : null

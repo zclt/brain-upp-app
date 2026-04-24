@@ -67,13 +67,13 @@ export function QuickNote({ open, onClose }: QuickNoteProps) {
   async function handleSave() {
     if (!user) return
     const lines = text.split('\n')
-    const title = lines[0].trim()
+    const title = lines[0].trim().slice(0, 80)
     if (!title) {
       setError(true)
       textareaRef.current?.focus()
       return
     }
-    const content = lines.slice(1).join('\n').trim()
+    const content = lines.slice(1).join('\n').trim().slice(0, 500)
     setSaving(true)
     try {
       await createNote(user.uid, {
