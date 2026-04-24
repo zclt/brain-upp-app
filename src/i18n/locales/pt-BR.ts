@@ -101,6 +101,15 @@ const ptBR = {
     'pt-BR': 'Português',
     'es-PE': 'Español',
   },
+  quickNote: {
+    label: 'Nota rápida',
+    newNote: 'Nova nota',
+    placeholder: 'Primeira linha é o título, demais linhas a descrição…',
+    hint: 'Ctrl+Enter para salvar · Esc para cancelar',
+    save: 'Salvar',
+    cancel: 'Cancelar',
+    titleRequired: 'Escreva ao menos o título',
+  },
   trash: {
     title: 'Lixeira',
     subtitle: 'Itens excluídos são mantidos por 30 dias',
