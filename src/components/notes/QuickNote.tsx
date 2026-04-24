@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/authStore'
+import { useNotesStore } from '@/stores/notesStore'
 import { createNote } from '@/services/notes.service'
+import { MAX_TASKS } from '@/lib/constants'
+import { AlertCircle } from 'lucide-react'
 
 interface QuickNoteProps {
   open: boolean
@@ -13,6 +16,8 @@ interface QuickNoteProps {
 export function QuickNote({ open, onClose }: QuickNoteProps) {
   const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
+  const notesCount = useNotesStore((s) => s.notes.length)
+  const isAtLimit = notesCount >= MAX_TASKS
   const [text, setText] = useState('')
   const [error, setError] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -120,26 +125,35 @@ export function QuickNote({ open, onClose }: QuickNoteProps) {
         </button>
       </div>
 
-      {/* Textarea */}
+      {/* Textarea or limit warning */}
       <div className="px-3 pb-2">
-        <textarea
-          ref={textareaRef}
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value)
-            if (error) setError(false)
-          }}
-          onKeyDown={handleKeyDown}
-          placeholder={t('quickNote.placeholder')}
-          rows={4}
-          className={cn(
-            'w-full resize-none bg-transparent text-sm outline-none placeholder:text-muted-foreground leading-relaxed',
-            'min-h-[96px] max-h-64 overflow-y-auto',
-            error && 'placeholder:text-destructive',
-          )}
-        />
-        {error && (
-          <p className="text-xs text-destructive mb-1">{t('quickNote.titleRequired')}</p>
+        {isAtLimit ? (
+          <div className="flex items-start gap-2 py-3 text-sm text-destructive min-h-[96px]">
+            <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+            <span>{t('limits.maxTasksReached', { max: MAX_TASKS })}</span>
+          </div>
+        ) : (
+          <>
+            <textarea
+              ref={textareaRef}
+              value={text}
+              onChange={(e) => {
+                setText(e.target.value)
+                if (error) setError(false)
+              }}
+              onKeyDown={handleKeyDown}
+              placeholder={t('quickNote.placeholder')}
+              rows={4}
+              className={cn(
+                'w-full resize-none bg-transparent text-sm outline-none placeholder:text-muted-foreground leading-relaxed',
+                'min-h-[96px] max-h-64 overflow-y-auto',
+                error && 'placeholder:text-destructive',
+              )}
+            />
+            {error && (
+              <p className="text-xs text-destructive mb-1">{t('quickNote.titleRequired')}</p>
+            )}
+          </>
         )}
       </div>
 
@@ -155,7 +169,7 @@ export function QuickNote({ open, onClose }: QuickNoteProps) {
           </button>
           <button
             onClick={handleSave}
-            disabled={saving}
+            disabled={saving || isAtLimit}
             className="px-2.5 py-1 text-xs rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50"
           >
             {saving ? '…' : t('quickNote.save')}

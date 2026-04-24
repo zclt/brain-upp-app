@@ -142,6 +142,9 @@ const esPE = {
     itemsCount_one: '{{count}} elemento',
     itemsCount_other: '{{count}} elementos',
   },
+  limits: {
+    maxTasksReached: 'Límite de {{max}} notas alcanzado. Elimina una nota para crear otra.',
+  },
   notifications: {
     dueTodayTitle: 'Tarea vence hoy',
     dueTodayBody: '📌 {{title}}',
