@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { format, addDays } from 'date-fns'
 import { Trash2, RotateCcw, X, Trash } from 'lucide-react'
@@ -7,6 +8,7 @@ import { useTrash } from '@/hooks/useTrash'
 import { restoreNote, permanentDeleteNote, emptyTrash } from '@/services/notes.service'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { PriorityIndicator } from '@/components/notes/PriorityIndicator'
 import type { Note } from '@/types/note'
 
@@ -15,6 +17,8 @@ const TRASH_EXPIRY_DAYS = 30
 function TrashItem({ note }: { note: Note }) {
   const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
+  const [restoreOpen, setRestoreOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
 
   const deletedDate = note.deletedAt ? new Date(note.deletedAt) : null
   const expiryDate = deletedDate ? addDays(deletedDate, TRASH_EXPIRY_DAYS) : null
@@ -26,7 +30,6 @@ function TrashItem({ note }: { note: Note }) {
 
   async function handleDeleteForever() {
     if (!user) return
-    if (!window.confirm(t('trash.confirmDeleteForever'))) return
     await permanentDeleteNote(user.uid, note.id)
   }
 
@@ -56,7 +59,7 @@ function TrashItem({ note }: { note: Note }) {
 
       <div className="flex items-center gap-1 shrink-0">
         <button
-          onClick={handleRestore}
+          onClick={() => setRestoreOpen(true)}
           className="p-1.5 rounded-md hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
           title={t('trash.restore')}
           aria-label={t('trash.restore')}
@@ -64,7 +67,7 @@ function TrashItem({ note }: { note: Note }) {
           <RotateCcw className="w-4 h-4" />
         </button>
         <button
-          onClick={handleDeleteForever}
+          onClick={() => setDeleteOpen(true)}
           className="p-1.5 rounded-md hover:bg-destructive/10 transition-colors text-muted-foreground hover:text-destructive"
           title={t('trash.deleteForever')}
           aria-label={t('trash.deleteForever')}
@@ -72,6 +75,26 @@ function TrashItem({ note }: { note: Note }) {
           <X className="w-4 h-4" />
         </button>
       </div>
+
+      <ConfirmDialog
+        open={restoreOpen}
+        onOpenChange={setRestoreOpen}
+        title={t('confirm.restoreTitle')}
+        description={t('confirm.restoreDescription')}
+        confirmLabel={t('confirm.restore')}
+        variant="default"
+        onConfirm={handleRestore}
+      />
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={t('confirm.deleteForeverTitle')}
+        description={t('confirm.deleteForeverDescription')}
+        confirmLabel={t('confirm.deleteForever')}
+        variant="destructive"
+        onConfirm={handleDeleteForever}
+      />
     </div>
   )
 }
@@ -80,12 +103,12 @@ export function TrashPage() {
   const { t } = useTranslation()
   const user = useAuthStore((s) => s.user)
   const { trashedNotes, isLoading } = useTrashStore()
+  const [emptyOpen, setEmptyOpen] = useState(false)
 
   useTrash()
 
   async function handleEmptyTrash() {
     if (!user) return
-    if (!window.confirm(t('trash.confirmEmptyTrash'))) return
     await emptyTrash(user.uid, trashedNotes)
   }
 
@@ -100,7 +123,7 @@ export function TrashPage() {
           <Button
             variant="outline"
             size="sm"
-            onClick={handleEmptyTrash}
+            onClick={() => setEmptyOpen(true)}
             className="shrink-0 text-destructive hover:text-destructive hover:bg-destructive/10 border-destructive/30"
           >
             <Trash className="w-4 h-4 mr-2" />
@@ -130,6 +153,16 @@ export function TrashPage() {
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={emptyOpen}
+        onOpenChange={setEmptyOpen}
+        title={t('confirm.emptyTrashTitle')}
+        description={t('confirm.emptyTrashDescription')}
+        confirmLabel={t('confirm.emptyTrash')}
+        variant="destructive"
+        onConfirm={handleEmptyTrash}
+      />
     </div>
   )
 }

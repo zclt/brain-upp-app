@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
@@ -15,6 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 
 export function TodoItem({ note }: { note: Note }) {
   const { t } = useTranslation()
@@ -22,6 +24,7 @@ export function TodoItem({ note }: { note: Note }) {
   const openModal = useUIStore((s) => s.openModal)
   const trashedNotes = useTrashStore((s) => s.trashedNotes)
   const isDone = note.status === 'done'
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   async function toggleDone() {
     if (!user) return
@@ -79,7 +82,7 @@ export function TodoItem({ note }: { note: Note }) {
             {t('common.edit')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={handleDelete}
+            onClick={() => setConfirmOpen(true)}
             className="text-destructive focus:text-destructive cursor-pointer"
           >
             <Trash2 className="mr-2 h-4 w-4" />
@@ -87,6 +90,16 @@ export function TodoItem({ note }: { note: Note }) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title={t('confirm.deleteTitle')}
+        description={t('confirm.deleteDescription')}
+        confirmLabel={t('confirm.delete')}
+        variant="destructive"
+        onConfirm={handleDelete}
+      />
     </div>
   )
 }
