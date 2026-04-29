@@ -142,6 +142,9 @@ const enUS = {
     itemsCount_one: '{{count}} item',
     itemsCount_other: '{{count}} items',
   },
+  limits: {
+    maxTasksReached: 'Limit of {{max}} notes reached. Delete a note to create another.',
+  },
   notifications: {
     dueTodayTitle: 'Task due today',
     dueTodayBody: '📌 {{title}}',

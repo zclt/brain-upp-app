@@ -1,5 +1,7 @@
 import type { NoteStatus, Priority, NoteCategory } from '@/types/note'
 
+export const MAX_TASKS = 50
+
 export const KANBAN_COLUMNS: { id: NoteStatus; label: string; color: string }[] = [
   { id: 'backlog',     label: 'Backlog',      color: 'slate'  },
   { id: 'todo',        label: 'To Do',        color: 'blue'   },
