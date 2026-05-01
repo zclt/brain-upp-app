@@ -7,6 +7,8 @@ import { useUIStore } from '@/stores/uiStore'
 import { useAuthStore } from '@/stores/authStore'
 import { createNote, updateNote } from '@/services/notes.service'
 import { useNotesStore } from '@/stores/notesStore'
+import { MAX_TASKS } from '@/lib/constants'
+import { AlertCircle } from 'lucide-react'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog'
@@ -20,13 +22,13 @@ import {
 import type { NoteStatus } from '@/types/note'
 
 const schema = z.object({
-  title: z.string().min(1, 'Title is required').max(80),
-  content: z.string().max(200).optional().default(''),
+  title: z.string().trim().min(1, 'Title is required').max(80),
+  content: z.string().trim().max(500).optional().default(''),
   priority: z.enum(['urgent', 'high', 'medium', 'low', 'none']),
   category: z.enum(['study', 'research', 'idea', 'reference', 'task', 'other']),
   status: z.enum(['backlog', 'todo', 'in_progress', 'done']),
-  tags: z.string().max(50).optional().default(''),
-  dueDate: z.string().optional().default(''),
+  tags: z.string().max(200).optional().default(''),
+  dueDate: z.union([z.literal(''), z.string().regex(/^\d{4}-\d{2}-\d{2}$/)]).default(''),
 })
 
 type FormValues = z.infer<typeof schema>
@@ -36,6 +38,7 @@ export function NoteModal() {
   const { modalOpen, editingNote, closeModal } = useUIStore()
   const user = useAuthStore((s) => s.user)
   const notes = useNotesStore((s) => s.notes)
+  const isAtLimit = !editingNote && notes.length >= MAX_TASKS
 
   const {
     register,
@@ -71,7 +74,7 @@ export function NoteModal() {
     if (!user) return
 
     const tags = values.tags
-      ? values.tags.split(',').map((t) => t.trim()).filter(Boolean)
+      ? values.tags.split(',').map((t) => t.trim().slice(0, 20)).filter(Boolean).slice(0, 10)
       : []
 
     const dueDate = values.dueDate ? new Date(values.dueDate).toISOString() : null
@@ -111,6 +114,13 @@ export function NoteModal() {
         <DialogHeader>
           <DialogTitle>{editingNote ? t('modal.editNote') : t('modal.newNote')}</DialogTitle>
         </DialogHeader>
+
+        {isAtLimit && (
+          <div className="flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
+            <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+            <span>{t('limits.maxTasksReached', { max: MAX_TASKS })}</span>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-1.5">
@@ -199,7 +209,7 @@ export function NoteModal() {
 
           <DialogFooter className="pt-2">
             <Button type="button" variant="outline" onClick={closeModal}>{t('common.cancel')}</Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting || isAtLimit}>
               {isSubmitting ? t('common.saving') : editingNote ? t('common.saveChanges') : t('common.createNote')}
             </Button>
           </DialogFooter>

@@ -142,6 +142,9 @@ const ptBR = {
     itemsCount_one: '{{count}} item',
     itemsCount_other: '{{count}} itens',
   },
+  limits: {
+    maxTasksReached: 'Limite de {{max}} notas atingido. Exclua uma nota para criar outra.',
+  },
   notifications: {
     dueTodayTitle: 'Tarefa vence hoje',
     dueTodayBody: '📌 {{title}}',
