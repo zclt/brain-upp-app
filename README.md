@@ -160,19 +160,25 @@ Add the `VITE_FIREBASE_*` variables in **Netlify → Site → Environment variab
 ```
 src/
 ├── components/
-│   ├── auth/        # ProtectedRoute
+│   ├── auth/        # GoogleSignInButton, ProtectedRoute
 │   ├── dashboard/   # StatsBar, PrioritySection, TodoSection, CompletedSection
 │   ├── kanban/      # KanbanBoard, KanbanColumn, KanbanCard, ColumnHeader
-│   ├── layout/      # Sidebar, TopBar, MobileNav, UserMenu
-│   ├── notes/       # NoteCard, NoteModal, PriorityIndicator, TagBadge, QuickNote
+│   ├── layout/      # Sidebar, TopBar, MobileNav, UserMenu, LanguageSelector, ThemeToggle
+│   ├── notes/       # NoteCard, NoteModal, QuickNote (voice input), PriorityIndicator, TagBadge
 │   ├── todo/        # TodoList, TodoItem, TodoFilters
-│   └── ui/          # shadcn/ui primitives + ConfirmDialog
+│   └── ui/          # shadcn/ui primitives (badge, button, card, dialog, dropdown-menu,
+│                    #   input, label, select, separator, skeleton, textarea)
+│                    #   + ConfirmDialog, LoadingScreen
 ├── config/          # Firebase initialization
-├── hooks/           # useAuth, useNotes, useTrash, useTaskNotifications
+├── hooks/           # useAuth, useNotes, useKanban, useTrash, usePriority, useTaskNotifications
+├── i18n/            # i18next setup + locales (en-US, pt-BR, es-PE)
 ├── layouts/         # AppLayout, AuthLayout
+├── lib/             # utils (cn), constants (MAX_TASKS, …)
 ├── pages/           # DashboardPage, KanbanPage, TodoPage, TrashPage, LoginPage
 ├── router/          # createBrowserRouter config
 ├── services/        # notes.service.ts (Firestore CRUD + soft delete)
-├── stores/          # Zustand stores (auth, notes, trash, ui)
-└── types/           # Note, User, and shared TypeScript types
+│                    # auth.service.ts (Google sign-in / sign-out)
+├── stores/          # Zustand stores: authStore, notesStore, trashStore, uiStore, themeStore
+├── styles/          # globals.css (Tailwind base + CSS variables)
+└── types/           # note.ts, user.ts, index.ts
 ```
