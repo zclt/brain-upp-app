@@ -8,7 +8,7 @@ Organize your notes, studies, and research in one place. Brain-Upp is a producti
 - **Kanban Board** — drag-and-drop columns: Backlog, Todo, In Progress, Done
 - **Todo List** — flat list view with filtering and status controls
 - **Trash / Soft Delete** — deleted notes go to trash, restorable within 30 days; max 10 items; auto-purge on expiry
-- **Quick Note** — inline memo panel (press `N` anywhere) where the first line is the title and remaining lines are the description
+- **Quick Note** — inline memo panel (press `N` anywhere) where the first line is the title and remaining lines are the description; includes a **voice input button** (hold to record, release to save) powered by the Web Speech API — auto-saves when the transcribed text reaches at least 10 characters
 - **Browser Notifications** — notifies when a task is due today (permission requested on first load)
 - **Internationalization** — English, Portuguese (pt-BR), and Spanish (es-PE) with language selector
 - **Google Sign-In** — popup-based OAuth via Firebase Authentication
