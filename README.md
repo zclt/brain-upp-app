@@ -1,5 +1,12 @@
 # Brain-Upp
 
+[![Deploy](https://github.com/zclt/brain-upp-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/zclt/brain-upp-app/actions/workflows/deploy.yml)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-11-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com)
+[![Node.js](https://img.shields.io/badge/Node.js-24-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+
 Organize your notes, studies, and research in one place. Brain-Upp is a productivity app with Dashboard, Kanban board, and Todo list views, backed by Firebase with Google authentication.
 
 ## Features
