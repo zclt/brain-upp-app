@@ -125,6 +125,9 @@ const enUS = {
     save: 'Save',
     cancel: 'Cancel',
     titleRequired: 'Write at least a title',
+    micHint: 'Hold to record',
+    micListening: 'Listening…',
+    micTooShort: 'Speak more to save (min. {{min}} characters)',
   },
   trash: {
     title: 'Trash',
