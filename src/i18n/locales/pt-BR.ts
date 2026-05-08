@@ -125,6 +125,9 @@ const ptBR = {
     save: 'Salvar',
     cancel: 'Cancelar',
     titleRequired: 'Escreva ao menos o título',
+    micHint: 'Segure para gravar',
+    micListening: 'Ouvindo…',
+    micTooShort: 'Fale mais para salvar (mín. {{min}} caracteres)',
   },
   trash: {
     title: 'Lixeira',

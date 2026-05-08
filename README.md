@@ -1,5 +1,12 @@
 # Brain-Upp
 
+[![Deploy](https://github.com/zclt/brain-upp-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/zclt/brain-upp-app/actions/workflows/deploy.yml)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-11-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com)
+[![Node.js](https://img.shields.io/badge/Node.js-24-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+
 Organize your notes, studies, and research in one place. Brain-Upp is a productivity app with Dashboard, Kanban board, and Todo list views, backed by Firebase with Google authentication.
 
 ## Features
@@ -8,7 +15,7 @@ Organize your notes, studies, and research in one place. Brain-Upp is a producti
 - **Kanban Board** — drag-and-drop columns: Backlog, Todo, In Progress, Done
 - **Todo List** — flat list view with filtering and status controls
 - **Trash / Soft Delete** — deleted notes go to trash, restorable within 30 days; max 10 items; auto-purge on expiry
-- **Quick Note** — inline memo panel (press `N` anywhere) where the first line is the title and remaining lines are the description
+- **Quick Note** — inline memo panel (press `N` anywhere) where the first line is the title and remaining lines are the description; includes a **voice input button** (hold to record, release to save) powered by the Web Speech API — auto-saves when the transcribed text reaches at least 10 characters
 - **Browser Notifications** — notifies when a task is due today (permission requested on first load)
 - **Internationalization** — English, Portuguese (pt-BR), and Spanish (es-PE) with language selector
 - **Google Sign-In** — popup-based OAuth via Firebase Authentication
@@ -160,19 +167,25 @@ Add the `VITE_FIREBASE_*` variables in **Netlify → Site → Environment variab
 ```
 src/
 ├── components/
-│   ├── auth/        # ProtectedRoute
+│   ├── auth/        # GoogleSignInButton, ProtectedRoute
 │   ├── dashboard/   # StatsBar, PrioritySection, TodoSection, CompletedSection
 │   ├── kanban/      # KanbanBoard, KanbanColumn, KanbanCard, ColumnHeader
-│   ├── layout/      # Sidebar, TopBar, MobileNav, UserMenu
-│   ├── notes/       # NoteCard, NoteModal, PriorityIndicator, TagBadge, QuickNote
+│   ├── layout/      # Sidebar, TopBar, MobileNav, UserMenu, LanguageSelector, ThemeToggle
+│   ├── notes/       # NoteCard, NoteModal, QuickNote (voice input), PriorityIndicator, TagBadge
 │   ├── todo/        # TodoList, TodoItem, TodoFilters
-│   └── ui/          # shadcn/ui primitives + ConfirmDialog
+│   └── ui/          # shadcn/ui primitives (badge, button, card, dialog, dropdown-menu,
+│                    #   input, label, select, separator, skeleton, textarea)
+│                    #   + ConfirmDialog, LoadingScreen
 ├── config/          # Firebase initialization
-├── hooks/           # useAuth, useNotes, useTrash, useTaskNotifications
+├── hooks/           # useAuth, useNotes, useKanban, useTrash, usePriority, useTaskNotifications
+├── i18n/            # i18next setup + locales (en-US, pt-BR, es-PE)
 ├── layouts/         # AppLayout, AuthLayout
+├── lib/             # utils (cn), constants (MAX_TASKS, …)
 ├── pages/           # DashboardPage, KanbanPage, TodoPage, TrashPage, LoginPage
 ├── router/          # createBrowserRouter config
 ├── services/        # notes.service.ts (Firestore CRUD + soft delete)
-├── stores/          # Zustand stores (auth, notes, trash, ui)
-└── types/           # Note, User, and shared TypeScript types
+│                    # auth.service.ts (Google sign-in / sign-out)
+├── stores/          # Zustand stores: authStore, notesStore, trashStore, uiStore, themeStore
+├── styles/          # globals.css (Tailwind base + CSS variables)
+└── types/           # note.ts, user.ts, index.ts
 ```

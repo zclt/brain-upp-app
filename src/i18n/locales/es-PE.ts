@@ -125,6 +125,9 @@ const esPE = {
     save: 'Guardar',
     cancel: 'Cancelar',
     titleRequired: 'Escribe al menos el título',
+    micHint: 'Mantener para grabar',
+    micListening: 'Escuchando…',
+    micTooShort: 'Habla más para guardar (mín. {{min}} caracteres)',
   },
   trash: {
     title: 'Papelera',
