@@ -12,11 +12,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
-          vendor:   ['react', 'react-dom', 'react-router-dom'],
-          ui:       ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-select'],
-          dnd:      ['@dnd-kit/core', '@dnd-kit/sortable', '@dnd-kit/utilities'],
+        manualChunks(id: string) {
+          if (id.includes('firebase')) return 'firebase'
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/react-router-dom')) return 'vendor'
+          if (id.includes('@radix-ui')) return 'ui'
+          if (id.includes('@dnd-kit')) return 'dnd'
         },
       },
     },
