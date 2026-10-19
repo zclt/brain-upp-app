@@ -17,12 +17,12 @@ export function KanbanColumn({ id, label, notes }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id })
 
   return (
-    <div className="flex flex-col min-w-[280px] w-72 shrink-0">
+    <div className="flex flex-col min-h-0 min-w-[280px] w-72 shrink-0">
       <ColumnHeader id={id} label={label} count={notes.length} />
       <div
         ref={setNodeRef}
         className={cn(
-          'flex-1 rounded-xl p-2 space-y-2 min-h-[200px] transition-colors',
+          'flex-1 min-h-[200px] overflow-y-auto rounded-xl p-2 space-y-2 transition-colors',
           isOver ? 'bg-primary/5 ring-2 ring-primary/20' : 'bg-muted/40',
         )}
       >
