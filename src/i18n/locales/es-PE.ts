@@ -55,6 +55,9 @@ const esPE = {
     noNotes: 'No se encontraron notas',
     createFirst: 'Crear una nota',
     due: 'Vence {{date}}',
+    created: 'Creada {{date}}',
+    updated: 'Actualizada {{date}}',
+    completed: 'Completada {{date}}',
   },
   columns: {
     backlog: 'Backlog',

@@ -55,6 +55,9 @@ const enUS = {
     noNotes: 'No notes found',
     createFirst: 'Create a note',
     due: 'Due {{date}}',
+    created: 'Created {{date}}',
+    updated: 'Updated {{date}}',
+    completed: 'Completed {{date}}',
   },
   columns: {
     backlog: 'Backlog',

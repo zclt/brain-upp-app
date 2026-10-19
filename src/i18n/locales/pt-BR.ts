@@ -55,6 +55,9 @@ const ptBR = {
     noNotes: 'Nenhuma nota encontrada',
     createFirst: 'Criar uma nota',
     due: 'Vence {{date}}',
+    created: 'Criada {{date}}',
+    updated: 'Atualizada {{date}}',
+    completed: 'Concluída {{date}}',
   },
   columns: {
     backlog: 'Backlog',
