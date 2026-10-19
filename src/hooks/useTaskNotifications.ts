@@ -2,20 +2,17 @@ import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNotesStore } from '@/stores/notesStore'
 import type { Note } from '@/types/note'
+import { todayLocalDay } from '@/lib/dates'
 
 const STORAGE_KEY_PREFIX = 'brain-upp-notified-'
 const CHECK_INTERVAL_MS = 30 * 60 * 1000 // 30 minutes
 
-function todayDateString(): string {
-  return new Date().toISOString().split('T')[0]
-}
-
 function isToday(dateStr: string): boolean {
-  return dateStr.split('T')[0] === todayDateString()
+  return dateStr.slice(0, 10) === todayLocalDay()
 }
 
 function getNotifiedIds(): Set<string> {
-  const key = STORAGE_KEY_PREFIX + todayDateString()
+  const key = STORAGE_KEY_PREFIX + todayLocalDay()
   try {
     const raw = localStorage.getItem(key)
     return raw ? new Set(JSON.parse(raw) as string[]) : new Set()
@@ -25,14 +22,14 @@ function getNotifiedIds(): Set<string> {
 }
 
 function markNotified(id: string): void {
-  const key = STORAGE_KEY_PREFIX + todayDateString()
+  const key = STORAGE_KEY_PREFIX + todayLocalDay()
   const ids = getNotifiedIds()
   ids.add(id)
   localStorage.setItem(key, JSON.stringify([...ids]))
 }
 
 function cleanupOldKeys(): void {
-  const today = todayDateString()
+  const today = todayLocalDay()
   Object.keys(localStorage)
     .filter((k) => k.startsWith(STORAGE_KEY_PREFIX) && !k.endsWith(today))
     .forEach((k) => localStorage.removeItem(k))

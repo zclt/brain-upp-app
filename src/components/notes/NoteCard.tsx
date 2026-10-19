@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
-import { format } from 'date-fns'
 import { MoreHorizontal, Pencil, Trash2, CheckCircle2, Circle } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { formatDate, parseDueDate } from '@/lib/dates'
 import type { Note, NoteStatus } from '@/types/note'
 import { useAuthStore } from '@/stores/authStore'
 import { useUIStore } from '@/stores/uiStore'
@@ -32,7 +32,9 @@ const DATES_BY_STATUS: Record<NoteStatus, [keyof Note, DateKey][]> = {
 function getDateLabels(note: Note, t: TFunction): string[] {
   return DATES_BY_STATUS[note.status].flatMap(([field, key]) => {
     const value = note[field] as string | null
-    return value ? [t(key, { date: format(new Date(value), 'MMM d') })] : []
+    if (!value) return []
+    const date = field === 'dueDate' ? parseDueDate(value) : new Date(value)
+    return [t(key, { date: formatDate(date) })]
   })
 }
 

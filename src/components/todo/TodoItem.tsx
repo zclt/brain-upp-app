@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { format } from 'date-fns'
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { formatDate, parseDueDate } from '@/lib/dates'
 import type { Note } from '@/types/note'
 import { useAuthStore } from '@/stores/authStore'
 import { useUIStore } from '@/stores/uiStore'
@@ -62,7 +62,7 @@ export function TodoItem({ note }: { note: Note }) {
           ))}
           {note.dueDate && (
             <span className="text-xs text-muted-foreground">
-              {t('todo.due', { date: format(new Date(note.dueDate), 'MMM d') })}
+              {t('todo.due', { date: formatDate(parseDueDate(note.dueDate)) })}
             </span>
           )}
         </div>
