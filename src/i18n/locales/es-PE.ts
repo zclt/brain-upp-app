@@ -27,6 +27,7 @@ const esPE = {
     kanban: 'Kanban',
     todo: 'Tareas',
     trash: 'Papelera',
+    calendar: 'Calendario',
   },
   dashboard: {
     title: 'Panel',
@@ -48,6 +49,17 @@ const esPE = {
     title: 'Tablero Kanban',
     subtitle: 'Arrastra las tarjetas entre columnas para actualizar el estado',
     dropHere: 'Suelta aquí',
+  },
+  calendar: {
+    title: 'Calendario',
+    subtitle: 'Tus tarjetas organizadas por fecha',
+    previous: 'Mes anterior',
+    next: 'Mes siguiente',
+    today: 'Hoy',
+    noItems: 'No hay tarjetas en este día',
+    close: 'Cerrar',
+    itemsCount_one: '{{count}} tarjeta',
+    itemsCount_other: '{{count}} tarjetas',
   },
   todo: {
     title: 'Lista de tareas',

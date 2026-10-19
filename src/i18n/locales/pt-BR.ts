@@ -27,6 +27,7 @@ const ptBR = {
     kanban: 'Kanban',
     todo: 'Tarefas',
     trash: 'Lixeira',
+    calendar: 'Calendário',
   },
   dashboard: {
     title: 'Painel',
@@ -48,6 +49,17 @@ const ptBR = {
     title: 'Quadro Kanban',
     subtitle: 'Arraste os cards entre as colunas para atualizar o status',
     dropHere: 'Solte aqui',
+  },
+  calendar: {
+    title: 'Calendário',
+    subtitle: 'Seus cards distribuídos pelas datas',
+    previous: 'Mês anterior',
+    next: 'Próximo mês',
+    today: 'Hoje',
+    noItems: 'Nenhum card neste dia',
+    close: 'Fechar',
+    itemsCount_one: '{{count}} card',
+    itemsCount_other: '{{count}} cards',
   },
   todo: {
     title: 'Lista de tarefas',

@@ -6,6 +6,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { KanbanPage } from '@/pages/KanbanPage'
 import { TodoPage } from '@/pages/TodoPage'
+import { CalendarPage } from '@/pages/CalendarPage'
 import { TrashPage } from '@/pages/TrashPage'
 
 export const router = createBrowserRouter([
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
       { index: true,    element: <DashboardPage /> },
       { path: 'kanban', element: <KanbanPage /> },
       { path: 'todo',   element: <TodoPage /> },
+      { path: 'calendar', element: <CalendarPage /> },
       { path: 'trash',  element: <TrashPage /> },
     ],
   },

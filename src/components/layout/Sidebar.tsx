@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
-import { Brain, LayoutDashboard, Kanban, ListTodo, Trash2, X } from 'lucide-react'
+import { Brain, LayoutDashboard, Kanban, ListTodo, CalendarDays, Trash2, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useUIStore } from '@/stores/uiStore'
 import { useTrashStore } from '@/stores/trashStore'
@@ -15,6 +15,7 @@ export function Sidebar() {
     { to: '/',       label: t('nav.dashboard'), icon: LayoutDashboard, end: true,  badge: 0 },
     { to: '/kanban', label: t('nav.kanban'),    icon: Kanban,          end: false, badge: 0 },
     { to: '/todo',   label: t('nav.todo'),      icon: ListTodo,        end: false, badge: 0 },
+    { to: '/calendar', label: t('nav.calendar'), icon: CalendarDays,  end: false, badge: 0 },
     { to: '/trash',  label: t('nav.trash'),     icon: Trash2,          end: false, badge: trashCount },
   ]
 

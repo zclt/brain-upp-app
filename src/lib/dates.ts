@@ -9,11 +9,16 @@ const PATTERNS = {
   long: { 'en-US': 'MMM d, yyyy', default: 'd MMM yyyy' },
 } as const
 
+/** date-fns locale for the current app language. */
+export function getDateLocale(): Locale {
+  return LOCALES[i18n.language] ?? enUS
+}
+
 /** Formats a date in the current app language. */
 export function formatDate(date: Date, style: keyof typeof PATTERNS = 'short'): string {
   const lang = i18n.language
   const patterns: Record<string, string> = PATTERNS[style]
-  return format(date, patterns[lang] ?? patterns.default, { locale: LOCALES[lang] ?? enUS })
+  return format(date, patterns[lang] ?? patterns.default, { locale: getDateLocale() })
 }
 
 /**

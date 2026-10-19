@@ -12,7 +12,7 @@ interface TodoFiltersProps {
   onChange: (f: TodoFilter) => void
 }
 
-function Chip({
+export function Chip({
   active,
   onClick,
   children,

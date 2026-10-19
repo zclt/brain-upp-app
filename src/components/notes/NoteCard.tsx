@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
 import { MoreHorizontal, Pencil, Trash2, CheckCircle2, Circle } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { formatDate, parseDueDate } from '@/lib/dates'
-import type { Note, NoteStatus } from '@/types/note'
+import { formatDate } from '@/lib/dates'
+import { getNoteDates } from '@/lib/noteDates'
+import type { Note } from '@/types/note'
 import { useAuthStore } from '@/stores/authStore'
 import { useUIStore } from '@/stores/uiStore'
 import { updateNote, softDeleteNote, enforceTrashLimit } from '@/services/notes.service'
@@ -19,23 +20,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 
-type DateKey = 'todo.created' | 'todo.due' | 'todo.updated' | 'todo.completed'
-
-// Which dates each status shows, in display order
-const DATES_BY_STATUS: Record<NoteStatus, [keyof Note, DateKey][]> = {
-  backlog: [['createdAt', 'todo.created']],
-  todo: [['dueDate', 'todo.due']],
-  in_progress: [['updatedAt', 'todo.updated'], ['dueDate', 'todo.due']],
-  done: [['completedAt', 'todo.completed']],
-}
-
 function getDateLabels(note: Note, t: TFunction): string[] {
-  return DATES_BY_STATUS[note.status].flatMap(([field, key]) => {
-    const value = note[field] as string | null
-    if (!value) return []
-    const date = field === 'dueDate' ? parseDueDate(value) : new Date(value)
-    return [t(key, { date: formatDate(date) })]
-  })
+  return getNoteDates(note).map(({ labelKey, date }) => t(labelKey, { date: formatDate(date) }))
 }
 
 interface NoteCardProps {

@@ -27,6 +27,7 @@ const enUS = {
     kanban: 'Kanban',
     todo: 'Todo',
     trash: 'Trash',
+    calendar: 'Calendar',
   },
   dashboard: {
     title: 'Dashboard',
@@ -48,6 +49,17 @@ const enUS = {
     title: 'Kanban Board',
     subtitle: 'Drag cards between columns to update status',
     dropHere: 'Drop cards here',
+  },
+  calendar: {
+    title: 'Calendar',
+    subtitle: 'Your cards laid out by date',
+    previous: 'Previous month',
+    next: 'Next month',
+    today: 'Today',
+    noItems: 'No cards on this day',
+    close: 'Close',
+    itemsCount_one: '{{count}} card',
+    itemsCount_other: '{{count}} cards',
   },
   todo: {
     title: 'Todo List',
