@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { format } from 'date-fns'
+import type { TFunction } from 'i18next'
 import { MoreHorizontal, Pencil, Trash2, CheckCircle2, Circle } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { formatDate } from '@/lib/dates'
+import { getNoteDates } from '@/lib/noteDates'
 import type { Note } from '@/types/note'
 import { useAuthStore } from '@/stores/authStore'
 import { useUIStore } from '@/stores/uiStore'
@@ -18,6 +20,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 
+function getDateLabels(note: Note, t: TFunction): string[] {
+  return getNoteDates(note).map(({ labelKey, date }) => t(labelKey, { date: formatDate(date) }))
+}
+
 interface NoteCardProps {
   note: Note
   className?: string
@@ -30,6 +36,7 @@ export function NoteCard({ note, className }: NoteCardProps) {
   const trashedNotes = useTrashStore((s) => s.trashedNotes)
   const isDone = note.status === 'done'
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const dateLabels = getDateLabels(note, t)
 
   async function toggleDone() {
     if (!user) return
@@ -84,10 +91,8 @@ export function NoteCard({ note, className }: NoteCardProps) {
               <TagBadge key={tag} tag={tag} />
             ))}
           </div>
-          {note.dueDate && (
-            <p className="text-xs text-muted-foreground mt-1.5">
-              {t('todo.due', { date: format(new Date(note.dueDate), 'MMM d') })}
-            </p>
+          {dateLabels.length > 0 && (
+            <p className="text-xs text-muted-foreground mt-1.5">{dateLabels.join(' · ')}</p>
           )}
         </div>
 

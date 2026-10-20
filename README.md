@@ -12,12 +12,14 @@ Organize your notes, studies, and research in one place. Brain-Upp is a producti
 ## Features
 
 - **Dashboard** — overview of notes grouped by priority with quick stats
-- **Kanban Board** — drag-and-drop columns: Backlog, Todo, In Progress, Done
+- **Kanban Board** — drag-and-drop columns: Backlog, Todo, In Progress, Done; each column scrolls independently and double-clicking a card opens it for editing
 - **Todo List** — flat list view with filtering and status controls
+- **Calendar** — three-month view with month navigation; each day shows how many cards fall on it, and clicking a day opens a side panel with its cards; filter by All or any status
+- **Status-based card dates** — cards show the date that matters for their status: Backlog → created, Todo → due, In Progress → last updated + due, Done → completed (the Calendar uses the same rule)
 - **Trash / Soft Delete** — deleted notes go to trash, restorable within 30 days; max 10 items; auto-purge on expiry
 - **Quick Note** — inline memo panel (press `N` anywhere) where the first line is the title and remaining lines are the description; includes a **voice input button** (hold to record, release to save) powered by the Web Speech API — auto-saves when the transcribed text reaches at least 10 characters
 - **Browser Notifications** — notifies when a task is due today (permission requested on first load)
-- **Internationalization** — English, Portuguese (pt-BR), and Spanish (es-PE) with language selector
+- **Internationalization** — English, Portuguese (pt-BR), and Spanish (es-PE) with language selector; dates are formatted in the selected language
 - **Google Sign-In** — popup-based OAuth via Firebase Authentication
 - **Real-time sync** — data persisted in Firestore per user
 
@@ -160,7 +162,7 @@ Add the `VITE_FIREBASE_*` variables in **Netlify → Site → Environment variab
 |---|---|
 | `N` | Open Quick Note panel |
 | `Ctrl+Enter` / `⌘+Enter` | Save Quick Note |
-| `Esc` | Close Quick Note |
+| `Esc` | Close Quick Note / Calendar day panel |
 
 ## Project Structure
 
@@ -168,6 +170,7 @@ Add the `VITE_FIREBASE_*` variables in **Netlify → Site → Environment variab
 src/
 ├── components/
 │   ├── auth/        # GoogleSignInButton, ProtectedRoute
+│   ├── calendar/    # MonthGrid, DayPanel (selected day side panel)
 │   ├── dashboard/   # StatsBar, PrioritySection, TodoSection, CompletedSection
 │   ├── kanban/      # KanbanBoard, KanbanColumn, KanbanCard, ColumnHeader
 │   ├── layout/      # Sidebar, TopBar, MobileNav, UserMenu, LanguageSelector, ThemeToggle
@@ -177,11 +180,13 @@ src/
 │                    #   input, label, select, separator, skeleton, textarea)
 │                    #   + ConfirmDialog, LoadingScreen
 ├── config/          # Firebase initialization
-├── hooks/           # useAuth, useNotes, useKanban, useTrash, usePriority, useTaskNotifications
+├── hooks/           # useAuth, useNotes, useKanban, useCalendar, useTrash, usePriority,
+│                    #   useTaskNotifications
 ├── i18n/            # i18next setup + locales (en-US, pt-BR, es-PE)
 ├── layouts/         # AppLayout, AuthLayout
-├── lib/             # utils (cn), constants (MAX_TASKS, …)
-├── pages/           # DashboardPage, KanbanPage, TodoPage, TrashPage, LoginPage
+├── lib/             # utils (cn), constants (MAX_TASKS, …), dates (locale-aware formatting,
+│                    #   due date parsing), noteDates (status-based date rule)
+├── pages/           # DashboardPage, KanbanPage, TodoPage, CalendarPage, TrashPage, LoginPage
 ├── router/          # createBrowserRouter config
 ├── services/        # notes.service.ts (Firestore CRUD + soft delete)
 │                    # auth.service.ts (Google sign-in / sign-out)

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Kanban, ListTodo, Trash2 } from 'lucide-react'
+import { LayoutDashboard, Kanban, ListTodo, CalendarDays, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTrashStore } from '@/stores/trashStore'
 
@@ -12,6 +12,7 @@ export function MobileNav() {
     { to: '/',       label: t('nav.dashboard'), icon: LayoutDashboard, end: true  },
     { to: '/kanban', label: t('nav.kanban'),    icon: Kanban,          end: false },
     { to: '/todo',   label: t('nav.todo'),      icon: ListTodo,        end: false },
+    { to: '/calendar', label: t('nav.calendar'), icon: CalendarDays,  end: false },
     { to: '/trash',  label: t('nav.trash'),     icon: Trash2,          end: false },
   ]
 

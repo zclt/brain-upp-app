@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { format, addDays } from 'date-fns'
+import { addDays } from 'date-fns'
+import { formatDate } from '@/lib/dates'
 import { Trash2, RotateCcw, X, Trash } from 'lucide-react'
 import { useTrashStore } from '@/stores/trashStore'
 import { useAuthStore } from '@/stores/authStore'
@@ -46,12 +47,12 @@ function TrashItem({ note }: { note: Note }) {
           <PriorityIndicator priority={note.priority} />
           {deletedDate && (
             <span className="text-xs text-muted-foreground">
-              {t('trash.deletedOn', { date: format(deletedDate, 'MMM d, yyyy') })}
+              {t('trash.deletedOn', { date: formatDate(deletedDate, 'long') })}
             </span>
           )}
           {expiryDate && (
             <span className="text-xs text-destructive/70">
-              {t('trash.expiresOn', { date: format(expiryDate, 'MMM d, yyyy') })}
+              {t('trash.expiresOn', { date: formatDate(expiryDate, 'long') })}
             </span>
           )}
         </div>
