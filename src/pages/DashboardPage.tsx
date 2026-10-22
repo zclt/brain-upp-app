@@ -5,7 +5,7 @@ import { StatsBar } from '@/components/dashboard/StatsBar'
 import { PrioritySection } from '@/components/dashboard/PrioritySection'
 import { TodoSection } from '@/components/dashboard/TodoSection'
 import { CompletedSection } from '@/components/dashboard/CompletedSection'
-import { ViewToggle } from '@/components/dashboard/ViewToggle'
+import { ViewToggle } from '@/components/notes/ViewToggle'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export function DashboardPage() {
@@ -37,7 +37,7 @@ export function DashboardPage() {
           <h1 className="text-2xl font-bold tracking-tight">{t('dashboard.title')}</h1>
           <p className="text-muted-foreground text-sm">{t('dashboard.subtitle')}</p>
         </div>
-        <ViewToggle />
+        <ViewToggle page="dashboard" />
       </div>
       <StatsBar {...stats} />
       <PrioritySection notes={priorityNotes} />

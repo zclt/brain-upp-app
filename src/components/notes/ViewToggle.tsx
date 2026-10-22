@@ -1,15 +1,16 @@
 import { useTranslation } from 'react-i18next'
 import { LayoutGrid, List } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { useDashboardStore, type DashboardView } from '@/stores/dashboardStore'
+import { useViewStore, type ViewMode, type ViewPage } from '@/stores/viewStore'
 
-export function ViewToggle() {
+export function ViewToggle({ page }: { page: ViewPage }) {
   const { t } = useTranslation()
-  const { view, setView } = useDashboardStore()
+  const view = useViewStore((s) => s.views[page])
+  const setView = useViewStore((s) => s.setView)
 
-  const options: { value: DashboardView; label: string; icon: typeof List }[] = [
-    { value: 'list',    label: t('dashboard.viewList'),    icon: List       },
-    { value: 'columns', label: t('dashboard.viewColumns'), icon: LayoutGrid },
+  const options: { value: ViewMode; label: string; icon: typeof List }[] = [
+    { value: 'list',    label: t('common.viewList'),    icon: List       },
+    { value: 'columns', label: t('common.viewColumns'), icon: LayoutGrid },
   ]
 
   return (
@@ -17,7 +18,7 @@ export function ViewToggle() {
       {options.map(({ value, label, icon: Icon }) => (
         <button
           key={value}
-          onClick={() => setView(value)}
+          onClick={() => setView(page, value)}
           aria-label={label}
           aria-pressed={view === value}
           title={label}

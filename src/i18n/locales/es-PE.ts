@@ -1,5 +1,7 @@
 const esPE = {
   common: {
+    viewList: 'Lista',
+    viewColumns: 'Columnas',
     cancel: 'Cancelar',
     edit: 'Editar',
     delete: 'Eliminar',
@@ -32,8 +34,6 @@ const esPE = {
   dashboard: {
     title: 'Panel',
     subtitle: 'Resumen de tus notas y tareas',
-    viewList: 'Lista',
-    viewColumns: 'Columnas',
   },
   stats: {
     totalNotes: 'Total de notas',

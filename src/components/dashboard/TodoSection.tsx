@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { ListTodo } from 'lucide-react'
 import type { Note } from '@/types/note'
-import { NoteList } from './NoteList'
+import { NoteList } from '@/components/notes/NoteList'
+import { useViewStore } from '@/stores/viewStore'
 
 export function TodoSection({ notes }: { notes: Note[] }) {
   const { t } = useTranslation()
+  const view = useViewStore((s) => s.views.dashboard)
 
   return (
     <section>
@@ -15,7 +17,7 @@ export function TodoSection({ notes }: { notes: Note[] }) {
       {notes.length === 0 ? (
         <p className="text-sm text-muted-foreground py-4 text-center">{t('sections.nothingActive')}</p>
       ) : (
-        <NoteList notes={notes} />
+        <NoteList notes={notes} view={view} />
       )}
     </section>
   )

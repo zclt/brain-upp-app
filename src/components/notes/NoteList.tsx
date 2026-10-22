@@ -1,11 +1,10 @@
 import { cn } from '@/lib/utils'
 import type { Note } from '@/types/note'
-import { NoteCard } from '@/components/notes/NoteCard'
-import { useDashboardStore } from '@/stores/dashboardStore'
+import type { ViewMode } from '@/stores/viewStore'
+import { NoteCard } from './NoteCard'
 
-export function NoteList({ notes }: { notes: Note[] }) {
-  const view = useDashboardStore((s) => s.view)
-
+/** Note cards as a vertical list or a responsive 3 → 2 → 1 column grid. */
+export function NoteList({ notes, view }: { notes: Note[]; view: ViewMode }) {
   return (
     <div
       className={cn(

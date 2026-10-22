@@ -1,5 +1,7 @@
 const enUS = {
   common: {
+    viewList: 'List',
+    viewColumns: 'Columns',
     cancel: 'Cancel',
     edit: 'Edit',
     delete: 'Delete',
@@ -32,8 +34,6 @@ const enUS = {
   dashboard: {
     title: 'Dashboard',
     subtitle: 'Overview of your notes and tasks',
-    viewList: 'List',
-    viewColumns: 'Columns',
   },
   stats: {
     totalNotes: 'Total Notes',

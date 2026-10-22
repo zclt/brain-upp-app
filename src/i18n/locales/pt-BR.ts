@@ -1,5 +1,7 @@
 const ptBR = {
   common: {
+    viewList: 'Lista',
+    viewColumns: 'Colunas',
     cancel: 'Cancelar',
     edit: 'Editar',
     delete: 'Excluir',
@@ -32,8 +34,6 @@ const ptBR = {
   dashboard: {
     title: 'Painel',
     subtitle: 'Visão geral das suas notas e tarefas',
-    viewList: 'Lista',
-    viewColumns: 'Colunas',
   },
   stats: {
     totalNotes: 'Total de notas',
