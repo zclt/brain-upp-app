@@ -1,5 +1,7 @@
 const enUS = {
   common: {
+    viewList: 'List',
+    viewColumns: 'Columns',
     cancel: 'Cancel',
     edit: 'Edit',
     delete: 'Delete',

@@ -1,5 +1,7 @@
 const esPE = {
   common: {
+    viewList: 'Lista',
+    viewColumns: 'Columnas',
     cancel: 'Cancelar',
     edit: 'Editar',
     delete: 'Eliminar',

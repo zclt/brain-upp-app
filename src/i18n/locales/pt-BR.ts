@@ -1,5 +1,7 @@
 const ptBR = {
   common: {
+    viewList: 'Lista',
+    viewColumns: 'Colunas',
     cancel: 'Cancelar',
     edit: 'Editar',
     delete: 'Excluir',

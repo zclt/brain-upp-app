@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNotesStore } from '@/stores/notesStore'
 import { TodoList } from '@/components/todo/TodoList'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ViewToggle } from '@/components/notes/ViewToggle'
 
 export function TodoPage() {
   const { t } = useTranslation()
@@ -9,9 +10,12 @@ export function TodoPage() {
 
   return (
     <div className="p-4 sm:p-6 space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">{t('todo.title')}</h1>
-        <p className="text-muted-foreground text-sm">{t('todo.subtitle')}</p>
+      <div className="flex items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">{t('todo.title')}</h1>
+          <p className="text-muted-foreground text-sm">{t('todo.subtitle')}</p>
+        </div>
+        <ViewToggle page="todo" />
       </div>
       {isLoading ? (
         <div className="space-y-3">

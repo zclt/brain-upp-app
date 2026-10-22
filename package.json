@@ -56,7 +56,7 @@
     "tailwindcss": "^4.3.3",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.23.0",
-    "vite": "^8.1.0"
+    "vite": "^8.3.5"
   },
   "allowScripts": {
     "@firebase/util@1.12.1": true,

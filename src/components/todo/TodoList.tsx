@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNotesStore } from '@/stores/notesStore'
 import { useUIStore } from '@/stores/uiStore'
+import { useViewStore } from '@/stores/viewStore'
+import { NoteList } from '@/components/notes/NoteList'
 import { TodoItem } from './TodoItem'
 import { TodoFilters, type TodoFilter } from './TodoFilters'
 import { Button } from '@/components/ui/button'
@@ -11,6 +13,7 @@ export function TodoList() {
   const { t } = useTranslation()
   const notes = useNotesStore((s) => s.notes)
   const openModal = useUIStore((s) => s.openModal)
+  const view = useViewStore((s) => s.views.todo)
   const [filter, setFilter] = useState<TodoFilter>({ status: 'all', priority: 'all' })
 
   const filtered = useMemo(() => {
@@ -40,6 +43,8 @@ export function TodoList() {
               {t('todo.createFirst')}
             </Button>
           </div>
+        ) : view === 'columns' ? (
+          <NoteList notes={filtered} view="columns" />
         ) : (
           <div className="bg-card rounded-xl border shadow-sm divide-y-0">
             <div className="px-4">
