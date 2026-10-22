@@ -32,6 +32,8 @@ const enUS = {
   dashboard: {
     title: 'Dashboard',
     subtitle: 'Overview of your notes and tasks',
+    viewList: 'List',
+    viewColumns: 'Columns',
   },
   stats: {
     totalNotes: 'Total Notes',

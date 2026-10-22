@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { ListTodo } from 'lucide-react'
 import type { Note } from '@/types/note'
-import { NoteCard } from '@/components/notes/NoteCard'
+import { NoteList } from './NoteList'
 
 export function TodoSection({ notes }: { notes: Note[] }) {
   const { t } = useTranslation()
@@ -15,9 +15,7 @@ export function TodoSection({ notes }: { notes: Note[] }) {
       {notes.length === 0 ? (
         <p className="text-sm text-muted-foreground py-4 text-center">{t('sections.nothingActive')}</p>
       ) : (
-        <div className="space-y-2">
-          {notes.map((note) => <NoteCard key={note.id} note={note} />)}
-        </div>
+        <NoteList notes={notes} />
       )}
     </section>
   )
