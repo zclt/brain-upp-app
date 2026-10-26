@@ -23,12 +23,12 @@ import type { NoteStatus } from '@/types/note'
 
 const schema = z.object({
   title: z.string().trim().min(1, 'Title is required').max(80),
-  content: z.string().trim().max(500).optional().default(''),
+  content: z.string().trim().max(500),
   priority: z.enum(['urgent', 'high', 'medium', 'low', 'none']),
   category: z.enum(['study', 'research', 'idea', 'reference', 'task', 'other']),
   status: z.enum(['backlog', 'todo', 'in_progress', 'done']),
-  tags: z.string().max(200).optional().default(''),
-  dueDate: z.union([z.literal(''), z.string().regex(/^\d{4}-\d{2}-\d{2}$/)]).default(''),
+  tags: z.string().max(200),
+  dueDate: z.union([z.literal(''), z.string().regex(/^\d{4}-\d{2}-\d{2}$/)]),
 })
 
 type FormValues = z.infer<typeof schema>
